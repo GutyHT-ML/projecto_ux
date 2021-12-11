@@ -28,8 +28,7 @@
                 android:layout_height="250dp"
                 android:layout_gravity="center"
                 android:background="@drawable/ic_baseline_person_outline_24"
-                android:backgroundTint="@color/icons"
-                />
+                android:backgroundTint="@color/icons" />
 
             <ImageView
                 android:id="@+id/iv_add_pp"
@@ -44,6 +43,7 @@
         </RelativeLayout>
 
 
+
         <TextView android:id="@+id/tv_profile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -51,13 +51,62 @@
             android:layout_marginBottom="132dp"
             android:text="@string/off_app"
             android:textAllCaps="true"
-            android:textSize="16sp"
+            android:textSize="24sp"
+            android:textStyle="bold"
             />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/il_user"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="6dp"
+            app:errorTextColor="@color/crimson"
+            app:errorIconTint="@color/crimson"
+            app:boxStrokeErrorColor="@color/crimson"
+            android:hint="@string/usuario">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_user"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:maxLines="1"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/TextInputLayoutPswd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:errorEnabled="true"
+            android:layout_margin="6dp"
+            app:errorTextColor="@color/crimson"
+            app:errorIconTint="@color/crimson"
+            app:boxStrokeErrorColor="@color/crimson"
+            android:hint="@string/contra">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/TextInputEditTextPswd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:maxLines="1"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_edit"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Guardar perfil"
+            android:layout_margin="6dp"
+            android:layout_gravity="center"
+            />
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_logout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Cerrar sesion"
+            android:layout_margin="6dp"
             android:layout_gravity="center"
             />
     </LinearLayout>

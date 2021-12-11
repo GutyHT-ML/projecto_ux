@@ -26,7 +26,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.squareup.picasso.Picasso;
+
+import java.util.Objects;
 
 import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
@@ -43,19 +47,30 @@ public class ProfileFragmentActivity extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_profile_fragment, container, false);
 
+        TextInputLayout textInputLayout =  view.findViewById(R.id.TextInputLayoutPswd);
+        TextInputEditText textInputLayoutPswd =  view.findViewById(R.id.TextInputEditTextPswd);
+
+        TextInputLayout userInputLayout = view.findViewById(R.id.il_user);
+        TextInputEditText userEditText = view.findViewById(R.id.et_user);
+
         btnAddPp = view.findViewById(R.id.iv_add_pp);
         ivProfile = view.findViewById(R.id.iv_profile);
 
         TextView tvProfile = view.findViewById(R.id.tv_profile);
 
         MaterialButton btnLogout = view.findViewById(R.id.btn_logout);
+        MaterialButton btnEdit = view.findViewById(R.id.btn_edit);
 
-        sharedPreferences = getActivity()
-                .getPreferences(Context.MODE_PRIVATE);
+        String user = requireArguments().getString("user");
+
+        sharedPreferences = requireActivity()
+                .getSharedPreferences(user, Context.MODE_PRIVATE);
 
         tvProfile.setText(sharedPreferences.getString(getString(R.string.usuario),
                 getString(R.string.off_app)));
 
+        userEditText.setText(sharedPreferences.getString(getString(R.string.usuario), ""));
+        textInputLayoutPswd.setText(sharedPreferences.getString(getString(R.string.contra), ""));
         Uri uri = Uri.parse(sharedPreferences.getString("uri", ""));
 
         Picasso.get()
@@ -63,11 +78,23 @@ public class ProfileFragmentActivity extends Fragment {
                 .error(R.drawable.ic_baseline_person_24)
                 .transform(new CropCircleTransformation())
                 .into(ivProfile);
+        
+        btnEdit.setOnClickListener(v -> {
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString(getString(R.string.usuario),
+                    Objects.requireNonNull(userEditText.getText()).toString());
+            editor.putString(getString(R.string.contra),
+                    Objects.requireNonNull(textInputLayoutPswd.getText()).toString());
+            editor.apply();
+            Toast.makeText(getContext(), "Cuenta actualizada", Toast.LENGTH_SHORT).show();
+        });
 
         btnLogout.setOnClickListener(view1 -> {
-            SharedPreferences.Editor editor = sharedPreferences.edit();
+            SharedPreferences tokenPref = requireActivity()
+                    .getPreferences(Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = tokenPref.edit();
+            editor.remove(getString(R.string.token));
             editor.remove(getString(R.string.usuario));
-            editor.remove("uri");
             editor.apply();
 
             LoginfragmentActivity nextFrag = new LoginfragmentActivity();
